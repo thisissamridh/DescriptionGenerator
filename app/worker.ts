@@ -26,7 +26,7 @@ const embeddings = new HuggingFaceTransformersEmbeddings({
 const voyClient = new VoyClient();
 const vectorstore = new VoyVectorStore(voyClient, embeddings);
 const ollama = new ChatOllama({
-  baseUrl: "http://ec2-13-233-147-129.ap-south-1.compute.amazonaws.com:11435",
+  baseUrl: "http://ec2-44-218-193-14.compute-1.amazonaws.com:11435",
   temperature: 0.3,
   model: "mistral",
 });
@@ -42,37 +42,7 @@ const rephraseQuestionChainPrompt = PromptTemplate.fromTemplate(
   REPHRASE_QUESTION_TEMPLATE,
 );
 
-const RESPONSE_SYSTEM_TEMPLATE = `You are an AI language model skilled in refining and optimizing product descriptions. When presented with a product description, ask the user which transformation options they'd like applied, and then generate an improved version based on their selection. Each directive corresponds to a specific style, tone, or structural change:
-
-EXPAND (50-200 words): Elaborate on the description, adding more detail.
-SHORTEN (10-50 words): Condense the description while retaining key points.
-MIMIC MY STYLE: Imitate the user's distinct writing style.
-SIMPLIFY: Use basic language and straightforward sentences.
-FIX GRAMMAR: Correct any grammatical errors.
-COMPLICATE: Use advanced vocabulary and complex sentence structures.
-PROFESSIONAL: Employ a formal and authoritative tone.
-CONFIDENT: Convey assurance and certainty.
-CASUAL: Use informal language and a relaxed tone.
-FRIENDLY: Convey warmth and approachability.
-STRAIGHTFORWARD: Be direct and to the point.
-STORY: Incorporate narrative elements.
-SCARY: Evoke fear and unease.
-LOVECRAFT: Emulate H.P. Lovecraft's horror writing style.
-CLARITY: Ensure the message is unambiguous and clear.
-ADD HEADINGS: Incorporate subheadings for structure.
-1ST PERSON: Use a first-person perspective.
-REFINE: Enhance the overall quality and polish.
-3RD PERSON: Use a third-person perspective.
-ILLUSTRATE: Provide visual imagery through descriptive language.
-TRANSLATE: Render the description in a different language (specify which).
-ENRICH: Add layers of depth and detail.
-HUMANIZE: Make the description relatable and emotive.
-First, ask: "Which transformation options would you like to apply to your product description?" Once the user has specified their choices, transform the description using the selected styles and tones, ensuring the final result is coherent and effective. Then, indicate which options have been applied. Example:
-
-User Input: "A beautiful Chest of Drawers made from Solid Wood..."
-AI Question: "Which transformation options would you like to apply to your product description?"
-User Selection: REFINE, PROFESSIONAL
-Output: "Crafted by skilled artisans in Jodhpur, this exquisite Chest of Drawers is a testament to superior woodworking... (Options applied: REFINE, PROFESSIONAL)"`;
+const RESPONSE_SYSTEM_TEMPLATE = `You are a copywriter specializing in creating persuasive product descriptions. Your task is to take the provided product description and rewrite it to make it more engaging and optimized for selling. Enhance vocabulary, tone, and persuasive elements.`;
 
 const responseChainPrompt = ChatPromptTemplate.fromMessages<{
   context: string;
