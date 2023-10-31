@@ -1,11 +1,13 @@
 import { ChatWindow } from "@/components/ChatWindow";
 
 export default function Home() {
-  return (
+  return (<>
+
     <ChatWindow
       emoji="🏠"
-      titleText="Fully Client-Side Chat Over Documents"
+      titleText="Description Generator AI"
       placeholder="Try asking something about the document you just uploaded!"
     ></ChatWindow>
+  </>
   );
 }

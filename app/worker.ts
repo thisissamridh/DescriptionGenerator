@@ -26,7 +26,7 @@ const embeddings = new HuggingFaceTransformersEmbeddings({
 const voyClient = new VoyClient();
 const vectorstore = new VoyVectorStore(voyClient, embeddings);
 const ollama = new ChatOllama({
-  baseUrl: "https://ec2-44-218-193-14.compute-1.amazonaws.com:11435",
+  baseUrl: "http://44.218.193.14:11435/",
   temperature: 0.3,
   model: "mistral",
 });
@@ -42,8 +42,12 @@ const rephraseQuestionChainPrompt = PromptTemplate.fromTemplate(
   REPHRASE_QUESTION_TEMPLATE,
 );
 
-const RESPONSE_SYSTEM_TEMPLATE = `You are a copywriter specializing in creating persuasive product descriptions. Your task is to take the provided product description and rewrite it to make it more engaging and optimized for selling. Enhance vocabulary, tone, and persuasive elements.`;
 
+const RESPONSE_SYSTEM_TEMPLATE = `You are profession product description rewriter, ask user to enter product details and then you give user options : expand , shorten, professional , luxury . when users selects one you generate new product descriptions
+/expand: Get a longer and more detailed product description.
+/shorten: Get a concise and brief product description.
+/professional: Receive a description with a professional tone.
+/luxury: Get a luxurious and premium product description.`;
 const responseChainPrompt = ChatPromptTemplate.fromMessages<{
   context: string;
   chat_history: BaseMessage[];
